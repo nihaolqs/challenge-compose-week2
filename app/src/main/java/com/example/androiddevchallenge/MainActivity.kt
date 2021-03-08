@@ -17,13 +17,17 @@ package com.example.androiddevchallenge
 
 import android.os.Bundle
 import android.os.Handler
-
 import android.os.Looper
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -39,7 +43,6 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.ui.theme.MyTheme
@@ -72,47 +75,51 @@ fun CountdownScreen(time: Int, modifier: Modifier) {
     val color = when (leftTime.value * 100 / time) {
         in 0..33 -> Color(0xFFE30425)
         in 10..66 -> Color(0xFFFFBA53)
-        else -> Color(0xFFFFEC42)
+        else -> Color(0xFF4CAF50)
     }
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
-        .background(Color(0xFFFDBDBD))
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .background(Color.Black)
     ) {
         Surface(modifier = modifier.height(400.dp)) {
-            Canvas(modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(Color(0xFFFDBDBD))
-                .padding(10.dp), onDraw = {
+            Canvas(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(Color.Black)
+                    .padding(10.dp),
+                onDraw = {
 
-                drawArc(
-                    size = Size(200.dp.toPx(), 200.dp.toPx()),
-                    color = Color(0x66FFFFFF),
-                    startAngle = -90F,
-                    sweepAngle = 360F,
-                    useCenter = false,
-                    style = Stroke(width = 5.dp.toPx(), cap = StrokeCap.Round),
-                    topLeft = Offset(
-                        size.width / 2 - 100.dp.toPx(),
-                        size.height / 2 - 100.dp.toPx()
+                    drawArc(
+                        size = Size(200.dp.toPx(), 200.dp.toPx()),
+                        color = Color(0xFF494949),
+                        startAngle = -90F,
+                        sweepAngle = 360F,
+                        useCenter = false,
+                        style = Stroke(width = 5.dp.toPx(), cap = StrokeCap.Round),
+                        topLeft = Offset(
+                            size.width / 2 - 100.dp.toPx(),
+                            size.height / 2 - 100.dp.toPx()
+                        )
                     )
-                )
 
-                drawArc(
-                    size = Size(200.dp.toPx(), 200.dp.toPx()),
-                    color = color,
-                    startAngle = -90F,
-                    sweepAngle = leftTime.value * 1f / time * 360,
-                    useCenter = false,
-                    style = Stroke(width = 5.dp.toPx(), cap = StrokeCap.Round),
-                    topLeft = Offset(
-                        size.width / 2 - 100.dp.toPx(),
-                        size.height / 2 - 100.dp.toPx()
+                    drawArc(
+                        size = Size(200.dp.toPx(), 200.dp.toPx()),
+                        color = color,
+                        startAngle = -90F,
+                        sweepAngle = leftTime.value * 1f / time * 360,
+                        useCenter = false,
+                        style = Stroke(width = 5.dp.toPx(), cap = StrokeCap.Round),
+                        topLeft = Offset(
+                            size.width / 2 - 100.dp.toPx(),
+                            size.height / 2 - 100.dp.toPx()
+                        )
                     )
-                )
-            })
+                }
+            )
 
             Text(
                 text = formartTime(leftTime.value),
@@ -128,7 +135,7 @@ fun CountdownScreen(time: Int, modifier: Modifier) {
                             placeable.placeRelative(x, y)
                         }
                     }
-                    )
+            )
         }
 
         Row() {
@@ -136,7 +143,8 @@ fun CountdownScreen(time: Int, modifier: Modifier) {
                 onClick = {
                     handel.removeCallbacksAndMessages(null)
                     leftTime.value = time
-                }, modifier =
+                },
+                modifier =
                 Modifier
                     .weight(1f)
                     .padding(30.dp)
@@ -160,7 +168,8 @@ fun CountdownScreen(time: Int, modifier: Modifier) {
                         handel.removeCallbacksAndMessages(null)
                     }
                     isStart.value = !isStart.value
-                }, modifier =
+                },
+                modifier =
                 Modifier
                     .weight(1f)
                     .padding(30.dp)
@@ -168,9 +177,7 @@ fun CountdownScreen(time: Int, modifier: Modifier) {
                 Text(text = if (isStart.value) "Pause" else "Start")
             }
         }
-
     }
-
 }
 
 fun formartTime(time: Int): String {
